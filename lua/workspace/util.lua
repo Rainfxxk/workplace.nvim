@@ -131,7 +131,7 @@ function M.escape_tabline(text)
 end
 
 function M.notify(message, level)
-    local ok, config = pcall(require, "workplace.config")
+    local ok, config = pcall(require, "workspace.config")
     local configured = vim.log.levels.WARN
     if ok then
         configured = config.options.notify
@@ -140,12 +140,12 @@ function M.notify(message, level)
         return
     end
 
-    vim.notify("workplace.nvim: " .. tostring(message), level or configured)
+    vim.notify("workspace.nvim: " .. tostring(message), level or configured)
 end
 
 function M.fire(name)
     pcall(vim.api.nvim_exec_autocmds, "User", {
-        pattern = "WorkplaceNvim" .. name,
+        pattern = "WorkspaceNvim" .. name,
     })
 end
 

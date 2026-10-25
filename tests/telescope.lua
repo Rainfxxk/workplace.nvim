@@ -20,28 +20,28 @@ local tmp = vim.fn.tempname()
 vim.fn.mkdir(tmp .. "/a", "p")
 vim.fn.mkdir(tmp .. "/b", "p")
 
-local workplace = require("workplace")
-ok(package.loaded["telescope._extensions.workplace"] == nil, "workplace extension is not loaded before setup")
+local workspace = require("workspace")
+ok(package.loaded["telescope._extensions.workspace"] == nil, "workspace extension is not loaded before setup")
 
-workplace.setup({
+workspace.setup({
     tabline = { enabled = false },
     notify = false,
 })
 ok(
-    package.loaded["telescope._extensions.workplace"] ~= nil,
-    "workplace.setup() auto-loads the Telescope extension"
+    package.loaded["telescope._extensions.workspace"] ~= nil,
+    "workspace.setup() auto-loads the Telescope extension"
 )
 
-workplace.new({ cwd = vim.fs.normalize(tmp .. "/a"), name = "TelescopeA" })
-workplace.new({ cwd = vim.fs.normalize(tmp .. "/b"), name = "TelescopeB" })
+workspace.new({ cwd = vim.fs.normalize(tmp .. "/a"), name = "TelescopeA" })
+workspace.new({ cwd = vim.fs.normalize(tmp .. "/b"), name = "TelescopeB" })
 
 local telescope = require("telescope")
 telescope.setup({})
-local extension = telescope.load_extension("workplace")
-ok(type(extension.workplace) == "function", "workplace extension exports the picker")
-ok(type(extension.workspaces) == "function", "workplace extension exports the plural alias")
+local extension = telescope.load_extension("workspace")
+ok(type(extension.workspace) == "function", "workspace extension exports the picker")
+ok(type(extension.workspaces) == "function", "workspace extension exports the plural alias")
 
-extension.workplace({})
+extension.workspace({})
 
 local function find_prompt()
     local state = require("telescope.actions.state")
@@ -75,12 +75,12 @@ if prompt and picker then
 
     require("telescope.actions").select_default(prompt)
     vim.wait(1000, function()
-        return selected_name ~= nil and workplace.current().name == selected_name
+        return selected_name ~= nil and workspace.current().name == selected_name
     end, 50)
 
     ok(
-        selected_name ~= nil and workplace.current().name == selected_name,
-        ":Telescope workplace switches to the selected workspace"
+        selected_name ~= nil and workspace.current().name == selected_name,
+        ":Telescope workspace switches to the selected workspace"
     )
 else
     ok(false, "Telescope picker is ready for selection")

@@ -1,0 +1,35 @@
+name: Test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    name: Neovim ${{ matrix.neovim }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        neovim:
+          - stable
+          - nightly
+    steps:
+      - uses: actions/checkout@v4
+      - uses: rhysd/action-setup-vim@v1
+        with:
+          neovim: true
+          version: ${{ matrix.neovim }}
+      - name: Run headless tests
+        run: tests/run.sh
+      - name: Install optional Telescope test dependencies
+        run: |
+          git clone --depth 1 https://github.com/nvim-telescope/telescope.nvim.git /tmp/telescope.nvim
+          git clone --depth 1 https://github.com/nvim-lua/plenary.nvim.git /tmp/plenary.nvim
+      - name: Run Telescope extension test
+        run: |
+          nvim --headless --clean -u NONE \
+            --cmd 'set rtp+=.' \
+            --cmd 'set rtp+=/tmp/telescope.nvim' \
+            --cmd 'set rtp+=/tmp/plenary.nvim' \
+            -l tests/telescope.lua

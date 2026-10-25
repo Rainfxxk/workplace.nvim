@@ -1,14 +1,14 @@
-local close = require("workplace.close")
-local config = require("workplace.config")
-local cwd = require("workplace.cwd")
-local registry = require("workplace.registry")
-local scope = require("workplace.scope")
-local session = require("workplace.session")
-local util = require("workplace.util")
+local close = require("workspace.close")
+local config = require("workspace.config")
+local cwd = require("workspace.cwd")
+local registry = require("workspace.registry")
+local scope = require("workspace.scope")
+local session = require("workspace.session")
+local util = require("workspace.util")
 
 local M = {}
 
-local GROUP = "WorkplaceNvim"
+local GROUP = "WorkspaceNvim"
 
 local session_sequence = 0
 local restored_sequence = -1
@@ -241,73 +241,73 @@ function M.setup_autocmds()
     vim.api.nvim_create_autocmd("TabNew", {
         group = group,
         callback = M.on_tab_new,
-        desc = "workplace.nvim: register a new workspace",
+        desc = "workspace.nvim: register a new workspace",
     })
     vim.api.nvim_create_autocmd("TabEnter", {
         group = group,
         callback = M.on_tab_enter,
-        desc = "workplace.nvim: activate the workspace",
+        desc = "workspace.nvim: activate the workspace",
     })
     vim.api.nvim_create_autocmd("TabNewEntered", {
         group = group,
         callback = M.on_tab_new_entered,
-        desc = "workplace.nvim: synchronize a new workspace",
+        desc = "workspace.nvim: synchronize a new workspace",
     })
     vim.api.nvim_create_autocmd("TabClosedPre", {
         group = group,
         callback = M.on_tab_closed_pre,
-        desc = "workplace.nvim: capture workspace state before closing",
+        desc = "workspace.nvim: capture workspace state before closing",
     })
     vim.api.nvim_create_autocmd("TabClosed", {
         group = group,
         callback = M.on_tab_closed,
-        desc = "workplace.nvim: finalize a closed workspace",
+        desc = "workspace.nvim: finalize a closed workspace",
     })
     vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
         group = group,
         callback = function(args)
             M.on_buf_enter(args.buf)
         end,
-        desc = "workplace.nvim: attach a buffer to the current workspace",
+        desc = "workspace.nvim: attach a buffer to the current workspace",
     })
     vim.api.nvim_create_autocmd("BufDelete", {
         group = group,
         callback = function(args)
             M.on_buf_delete(args.buf)
         end,
-        desc = "workplace.nvim: detach a deleted buffer",
+        desc = "workspace.nvim: detach a deleted buffer",
     })
     vim.api.nvim_create_autocmd("BufWipeout", {
         group = group,
         callback = function(args)
             M.on_buf_wipeout(args.buf)
         end,
-        desc = "workplace.nvim: detach a wiped buffer",
+        desc = "workspace.nvim: detach a wiped buffer",
     })
     vim.api.nvim_create_autocmd("DirChanged", {
         group = group,
         callback = M.on_dir_changed,
-        desc = "workplace.nvim: synchronize the workspace working directory",
+        desc = "workspace.nvim: synchronize the workspace working directory",
     })
     vim.api.nvim_create_autocmd("SessionLoadPre", {
         group = group,
         callback = M.on_session_load_pre,
-        desc = "workplace.nvim: suspend close cleanup while loading a session",
+        desc = "workspace.nvim: suspend close cleanup while loading a session",
     })
     vim.api.nvim_create_autocmd("SessionLoadPost", {
         group = group,
         callback = M.on_session_load_post,
-        desc = "workplace.nvim: rebuild workspace state after loading a session",
+        desc = "workspace.nvim: rebuild workspace state after loading a session",
     })
     vim.api.nvim_create_autocmd("SessionWritePost", {
         group = group,
         callback = M.on_session_write_post,
-        desc = "workplace.nvim: write workspace metadata next to the session",
+        desc = "workspace.nvim: write workspace metadata next to the session",
     })
     vim.api.nvim_create_autocmd("VimLeavePre", {
         group = group,
         callback = M.on_vim_leave_pre,
-        desc = "workplace.nvim: disable destructive cleanup while quitting",
+        desc = "workspace.nvim: disable destructive cleanup while quitting",
     })
 end
 

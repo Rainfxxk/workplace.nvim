@@ -28,7 +28,7 @@ M.defaults = {
         enabled = true,
     },
     telescope = {
-        -- Load the "workplace" Telescope extension during setup when
+        -- Load the "workspace" Telescope extension during setup when
         -- telescope.nvim is available.
         load_extension = true,
     },
@@ -56,24 +56,24 @@ function M.setup(overrides)
     M.options = vim.tbl_deep_extend("force", vim.deepcopy(M.defaults), overrides or {})
 
     if M.options.new_tab_cwd ~= "inherit" and M.options.new_tab_cwd ~= "global" then
-        error("workplace.nvim: new_tab_cwd must be 'inherit' or 'global'")
+        error("workspace.nvim: new_tab_cwd must be 'inherit' or 'global'")
     end
 
     local tabline_enabled = M.options.tabline.enabled
     if tabline_enabled ~= "auto" and type(tabline_enabled) ~= "boolean" then
-        error("workplace.nvim: tabline.enabled must be 'auto', true or false")
+        error("workspace.nvim: tabline.enabled must be 'auto', true or false")
     end
 
     if M.options.close.modified ~= "prompt" and M.options.close.modified ~= "keep" then
-        error("workplace.nvim: close.modified must be 'prompt' or 'keep'")
+        error("workspace.nvim: close.modified must be 'prompt' or 'keep'")
     end
 
     if type(M.options.session.enabled) ~= "boolean" then
-        error("workplace.nvim: session.enabled must be a boolean")
+        error("workspace.nvim: session.enabled must be a boolean")
     end
 
     if type(M.options.telescope) ~= "table" or type(M.options.telescope.load_extension) ~= "boolean" then
-        error("workplace.nvim: telescope.load_extension must be a boolean")
+        error("workspace.nvim: telescope.load_extension must be a boolean")
     end
 
     return M.options

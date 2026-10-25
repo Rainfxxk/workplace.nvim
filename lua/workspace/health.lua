@@ -1,7 +1,7 @@
-local config = require("workplace.config")
-local registry = require("workplace.registry")
-local session = require("workplace.session")
-local util = require("workplace.util")
+local config = require("workspace.config")
+local registry = require("workspace.registry")
+local session = require("workspace.session")
+local util = require("workspace.util")
 
 local M = {}
 
@@ -11,16 +11,16 @@ local function has_scope_conflict()
 end
 
 function M.check()
-    vim.health.start("workplace.nvim")
+    vim.health.start("workspace.nvim")
 
     if vim.fn.has("nvim-0.12") == 1 then
         vim.health.ok("Neovim >= 0.12")
     else
-        vim.health.error("workplace.nvim requires Neovim >= 0.12")
+        vim.health.error("workspace.nvim requires Neovim >= 0.12")
     end
 
     if has_scope_conflict() then
-        vim.health.error("scope.nvim is loaded; it conflicts with workplace.nvim. Disable scope.nvim.")
+        vim.health.error("scope.nvim is loaded; it conflicts with workspace.nvim. Disable scope.nvim.")
     else
         vim.health.ok("no scope.nvim conflict detected")
     end
@@ -51,7 +51,7 @@ function M.check()
 
     if #tabs ~= #workspaces then
         vim.health.warn(
-            string.format("registry has %d workspace(s) for %d tab(s); try workplace.refresh()", #workspaces, #tabs)
+            string.format("registry has %d workspace(s) for %d tab(s); try workspace.refresh()", #workspaces, #tabs)
         )
     else
         vim.health.ok("registry matches the current tabs")
@@ -83,8 +83,8 @@ function M.check()
     end
 
     local tabline = vim.o.tabline
-    if tabline ~= "" and not tabline:find("workplace.tabline", 1, true) then
-        vim.health.info("a custom 'tabline' is set; workplace.nvim did not install its renderer")
+    if tabline ~= "" and not tabline:find("workspace.tabline", 1, true) then
+        vim.health.info("a custom 'tabline' is set; workspace.nvim did not install its renderer")
     end
 
     if not config.options.session.enabled then

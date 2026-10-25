@@ -1,13 +1,13 @@
-local config = require("workplace.config")
-local cwd = require("workplace.cwd")
-local registry = require("workplace.registry")
-local scope = require("workplace.scope")
-local util = require("workplace.util")
+local config = require("workspace.config")
+local cwd = require("workspace.cwd")
+local registry = require("workspace.registry")
+local scope = require("workspace.scope")
+local util = require("workspace.util")
 
 local M = {}
 
 M.VERSION = 1
-M.SIDECAR_SUFFIX = ".workplace.json"
+M.SIDECAR_SUFFIX = ".workspace.json"
 
 local function session_path(path)
     path = path or vim.v.this_session

@@ -24,16 +24,16 @@ local function buffer_lines(ws)
 end
 
 local function workspace_entries()
-    if not vim.g.loaded_workplace_nvim then
-        vim.notify("workplace.nvim: call require('workplace').setup() first", vim.log.levels.WARN)
+    if not vim.g.loaded_workspace_nvim then
+        vim.notify("workspace.nvim: call require('workspace').setup() first", vim.log.levels.WARN)
         return {}
     end
 
-    local workplace = require("workplace")
-    local current = workplace.current()
+    local workspace = require("workspace")
+    local current = workspace.current()
     local entries = {}
 
-    for index, ws in ipairs(workplace.list()) do
+    for index, ws in ipairs(workspace.list()) do
         local tab = vim.api.nvim_tabpage_get_number(ws.tab)
         local cwd = vim.fn.fnamemodify(ws.cwd, ":~")
         local is_current = current ~= nil and current.id == ws.id
@@ -65,10 +65,10 @@ local function switch_workspace(prompt_bufnr)
     end
 
     actions.close(prompt_bufnr)
-    require("workplace").switch(selection.value)
+    require("workspace").switch(selection.value)
 end
 
-function M.workplace(opts)
+function M.workspace(opts)
     opts = opts or {}
     local entries = workspace_entries()
     if #entries == 0 then
@@ -76,7 +76,7 @@ function M.workplace(opts)
     end
 
     pickers.new(opts, {
-        prompt_title = "Workplaces",
+        prompt_title = "Workspaces",
         finder = finders.new_table({
             results = entries,
             entry_maker = function(entry)
@@ -119,11 +119,11 @@ function M.workplace(opts)
     }):find()
 end
 
-M.workspaces = M.workplace
+M.workspaces = M.workspace
 
 return {
     exports = {
-        workplace = M.workplace,
+        workspace = M.workspace,
         workspaces = M.workspaces,
     },
 }

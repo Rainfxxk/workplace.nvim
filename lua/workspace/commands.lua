@@ -1,5 +1,5 @@
-local registry = require("workplace.registry")
-local util = require("workplace.util")
+local registry = require("workspace.registry")
+local util = require("workspace.util")
 
 local M = {}
 
@@ -55,7 +55,7 @@ end
 
 local function usage()
     util.notify(
-        "commands: :Workplace new [path] [name] | open [name|id|path] | list | close[!] | rename [name] | cwd [path] | next | prev | buffers",
+        "commands: :Workspace new [path] [name] | open [name|id|path] | list | close[!] | rename [name] | cwd [path] | next | prev | buffers",
         vim.log.levels.INFO
     )
 end
@@ -89,7 +89,7 @@ local function workspace_lines()
 end
 
 local function buffer_lines()
-    local api = require("workplace.api")
+    local api = require("workspace.api")
     local lines = {}
     for _, buf in ipairs(api.buffers()) do
         lines[#lines + 1] = string.format(
@@ -110,7 +110,7 @@ local function argument_text(args)
 end
 
 local function new_workspace(args)
-    local api = require("workplace.api")
+    local api = require("workspace.api")
     local parts = vim.list_slice(args.fargs, 2)
     local raw = vim.trim(table.concat(parts, " "))
     if raw == "" then
@@ -137,7 +137,7 @@ local function new_workspace(args)
 end
 
 function M.dispatch(args)
-    local api = require("workplace.api")
+    local api = require("workspace.api")
     local subcommand = args.fargs[1]
 
     if not subcommand then
@@ -202,20 +202,20 @@ function M.dispatch(args)
 end
 
 function M.register()
-    vim.api.nvim_create_user_command("Workplace", M.dispatch, {
+    vim.api.nvim_create_user_command("Workspace", M.dispatch, {
         nargs = "*",
         bang = true,
         complete = complete,
-        desc = "Manage workplace.nvim workspaces",
+        desc = "Manage workspace.nvim workspaces",
         force = true,
     })
 
-    vim.api.nvim_create_user_command("WorkplaceClose", function(args)
-        require("workplace.api").close(nil, { force = args.bang })
+    vim.api.nvim_create_user_command("WorkspaceClose", function(args)
+        require("workspace.api").close(nil, { force = args.bang })
     end, {
         nargs = 0,
         bang = true,
-        desc = "Close the current workplace",
+        desc = "Close the current workspace",
         force = true,
     })
 end

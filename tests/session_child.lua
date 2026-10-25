@@ -1,4 +1,4 @@
-local workplace = require("workplace")
+local workspace = require("workspace")
 
 local result = {
     workspaces = {},
@@ -7,14 +7,14 @@ local result = {
     current = nil,
 }
 
-local current = workplace.current()
+local current = workspace.current()
 if current then
     result.current = current.name
 end
 
-for _, ws in ipairs(workplace.list()) do
+for _, ws in ipairs(workspace.list()) do
     local files = {}
-    for _, buf in ipairs(workplace.buffers(ws)) do
+    for _, buf in ipairs(workspace.buffers(ws)) do
         local name = vim.api.nvim_buf_get_name(buf)
         if name ~= "" then
             files[#files + 1] = vim.fs.normalize(name)
@@ -44,6 +44,6 @@ for _, info in ipairs(vim.fn.getbufinfo({ buflisted = 1 })) do
     end
 end
 
-io.stdout:write("\nWORKPLACE_RESULT:" .. vim.json.encode(result) .. "\n")
+io.stdout:write("\nWORKSPACE_RESULT:" .. vim.json.encode(result) .. "\n")
 io.stdout:flush()
 vim.cmd("qa!")
