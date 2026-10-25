@@ -1,8 +1,8 @@
-local util = require("workplace.util")
+local util = require("workspace.util")
 
 local M = {}
 
-M.VAR = "workplace_nvim"
+M.VAR = "workspace_nvim"
 
 M.workspaces = {}
 M.by_tab = {}

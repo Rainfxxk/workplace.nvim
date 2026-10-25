@@ -1,10 +1,10 @@
-local config = require("workplace.config")
-local registry = require("workplace.registry")
-local util = require("workplace.util")
+local config = require("workspace.config")
+local registry = require("workspace.registry")
+local util = require("workspace.util")
 
 local M = {}
 
-local RENDERER = "%!v:lua.require'workplace.tabline'.render()"
+local RENDERER = "%!v:lua.require'workspace.tabline'.render()"
 
 local function is_modified(ws)
     for _, buf in ipairs(ws.buffers) do
@@ -71,7 +71,7 @@ function M.install()
 
     if enabled == "auto" then
         local current = vim.o.tabline
-        if current ~= "" and not current:find("workplace.tabline", 1, true) then
+        if current ~= "" and not current:find("workspace.tabline", 1, true) then
             return
         end
     end

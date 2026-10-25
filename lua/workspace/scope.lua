@@ -1,6 +1,6 @@
-local config = require("workplace.config")
-local registry = require("workplace.registry")
-local util = require("workplace.util")
+local config = require("workspace.config")
+local registry = require("workspace.registry")
+local util = require("workspace.util")
 
 local M = {}
 

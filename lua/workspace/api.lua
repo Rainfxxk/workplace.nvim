@@ -1,9 +1,9 @@
-local close = require("workplace.close")
-local cwd = require("workplace.cwd")
-local lifecycle = require("workplace.lifecycle")
-local registry = require("workplace.registry")
-local scope = require("workplace.scope")
-local util = require("workplace.util")
+local close = require("workspace.close")
+local cwd = require("workspace.cwd")
+local lifecycle = require("workspace.lifecycle")
+local registry = require("workspace.registry")
+local scope = require("workspace.scope")
+local util = require("workspace.util")
 
 local M = {}
 

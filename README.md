@@ -1,4 +1,4 @@
-# workplace.nvim
+# workspace.nvim
 
 Treat every Neovim tab as a workspace with its own working directory, buffer list, and window layout. Names and state persist with your session.
 
@@ -13,14 +13,14 @@ Treat every Neovim tab as a workspace with its own working directory, buffer lis
 - **Names and tabline** — workspaces are named after their directory and can be renamed. An optional built-in tabline is included.
 - **Session persistence** — workspace names, cwd, and buffers are restored when you reload a session saved with `:mksession` (works with persistence.nvim and auto-session).
 - **Safe closing** — shared buffers are never deleted; exclusive unmodified buffers are cleaned up; modified buffers prompt or are preserved.
-- **Telescope picker** — switch workspaces with `:Telescope workplace`.
+- **Telescope picker** — switch workspaces with `:Telescope workspace`.
 - **No default keymaps, no required dependencies.**
 
 ## Requirements
 
 - Neovim >= 0.12.
 - Optional: [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) for the workspace picker.
-- **scope.nvim must be disabled** — both plugins manage `buflisted` and conflict. `:checkhealth workplace` reports it.
+- **scope.nvim must be disabled** — both plugins manage `buflisted` and conflict. `:checkhealth workspace` reports it.
 
 ## Installation
 
@@ -28,10 +28,10 @@ With lazy.nvim:
 
 ```lua
 {
-    "your-username/workplace.nvim",
+    "your-username/workspace.nvim",
     lazy = false, -- setup() should run early for session restore
     config = function()
-        require("workplace").setup()
+        require("workspace").setup()
     end,
 }
 ```
@@ -39,7 +39,7 @@ With lazy.nvim:
 Or install manually and call setup:
 
 ```lua
-require("workplace").setup()
+require("workspace").setup()
 ```
 
 `setup()` is required; the plugin does not load itself.
@@ -48,35 +48,35 @@ require("workplace").setup()
 
 | Command | Description |
 | --- | --- |
-| `:Workplace new [path] [name]` | Create a workspace, optionally with a directory and name. |
-| `:Workplace open [name\|id\|path]` | Switch to a workspace; with no argument, pick from a list. |
-| `:Workplace list` | List all workspaces. |
-| `:Workplace rename [name]` | Rename the current workspace. |
-| `:Workplace cwd [path]` | Show or set the current workspace's directory. |
-| `:Workplace close[!]` | Close the current workspace; `!` discards unsaved exclusive buffers. |
-| `:WorkplaceClose[!]` | Short alias for `:Workplace close`. |
-| `:Workplace next` / `prev` | Go to the next / previous workspace. |
-| `:Workplace buffers` | List the current workspace's buffers. |
+| `:Workspace new [path] [name]` | Create a workspace, optionally with a directory and name. |
+| `:Workspace open [name\|id\|path]` | Switch to a workspace; with no argument, pick from a list. |
+| `:Workspace list` | List all workspaces. |
+| `:Workspace rename [name]` | Rename the current workspace. |
+| `:Workspace cwd [path]` | Show or set the current workspace's directory. |
+| `:Workspace close[!]` | Close the current workspace; `!` discards unsaved exclusive buffers. |
+| `:WorkspaceClose[!]` | Short alias for `:Workspace close`. |
+| `:Workspace next` / `prev` | Go to the next / previous workspace. |
+| `:Workspace buffers` | List the current workspace's buffers. |
 
 Example session:
 
 ```vim
 " Create a workspace in a project directory
-:Workplace new ~/code/myproject
+:Workspace new ~/code/myproject
 " Open some files, then create another workspace
-:Workplace new ~/code/other-project
+:Workspace new ~/code/other-project
 " Switch back and forth; each tab keeps its own files and cwd
-:Workplace open
+:Workspace open
 :tabnext
 ```
 
 Optional keymaps:
 
 ```lua
-vim.keymap.set("n", "<leader>wn", "<cmd>Workplace new<cr>")
-vim.keymap.set("n", "<leader>wo", "<cmd>Workplace open<cr>")
-vim.keymap.set("n", "<leader>wl", "<cmd>Workplace list<cr>")
-vim.keymap.set("n", "<leader>wc", "<cmd>WorkplaceClose<cr>")
+vim.keymap.set("n", "<leader>wn", "<cmd>Workspace new<cr>")
+vim.keymap.set("n", "<leader>wo", "<cmd>Workspace open<cr>")
+vim.keymap.set("n", "<leader>wl", "<cmd>Workspace list<cr>")
+vim.keymap.set("n", "<leader>wc", "<cmd>WorkspaceClose<cr>")
 ```
 
 ## Configuration
@@ -84,7 +84,7 @@ vim.keymap.set("n", "<leader>wc", "<cmd>WorkplaceClose<cr>")
 Defaults are usually enough:
 
 ```lua
-require("workplace").setup()
+require("workspace").setup()
 ```
 
 Options you may want to change:
@@ -113,14 +113,14 @@ vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,termina
 If Telescope is installed, the extension is loaded automatically:
 
 ```vim
-:Telescope workplace
+:Telescope workspace
 ```
 
-If Telescope is lazy-loaded, call `require("telescope").load_extension("workplace")` after it loads.
+If Telescope is lazy-loaded, call `require("telescope").load_extension("workspace")` after it loads.
 
 ## Sessions
 
-Workspace state is written to `<session>.workplace.json` when you save a session with `:mksession`, and restored when the session is loaded. This works out of the box with persistence.nvim and auto-session.
+Workspace state is written to `<session>.workspace.json` when you save a session with `:mksession`, and restored when the session is loaded. This works out of the box with persistence.nvim and auto-session.
 
 Terminal contents, unnamed buffers, and unsaved changes are not restored; only file buffers are.
 
